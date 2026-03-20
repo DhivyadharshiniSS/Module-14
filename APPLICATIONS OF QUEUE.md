@@ -1,73 +1,124 @@
 # Exp.No:40  
-## IMPLEMENTATION OF CIRCULAR QUEUE USING PYTHON
+## APPLICATIONS OF QUEUE
+
+---
 
 ### AIM  
-To implement a Circular Queue using Python with operations such as enqueue, dequeue, and display, and to understand the behavior of the circular queue data structure.
+To write a Python program to implement CPU Process Scheduling using a queue.
+
+---
 
 ### ALGORITHM  
 
-1.Start
-2.Define a class queue with:
-3.A constructor to initialize queue, front, rear, and limit.
-4.isempty() method to check if the queue is empty.
-5.enqueue(item) method to insert elements if the queue is not full.
-6.dequeue() method to delete elements if the queue is not empty.
-7.display() method to show the current elements in the queue.
-8.Create a queue object by getting the size from the user.
-9.Accept input elements from the user and insert them using enqueue().
-10.Call display() to print the current queue.
-11.Call dequeue() to remove an element and display the queue.
-12.End
+1. Start the program.  
+2. Define the function `CalculateWaitingTime(at, bt, N)`.  
+3. Initialize a list `wt` of size `N` with all values set to 0.  
+4. Set `wt[0] = 0` for the first process.  
+5. Print the table header: "P.No.", "Arrival Time", "Burst Time", "Waiting Time".  
+6. Print the values for the first process.  
+7. For each process from index `1` to `N-1`:  
+   - Calculate `wt[i] = (at[i - 1] + bt[i - 1] + wt[i - 1]) - at[i]`.  
+   - Print the process number, arrival time, burst time, and waiting time.  
+8. Initialize `total_waiting_time = 0`.  
+9. Add up all waiting times.  
+10. Calculate average waiting time as `average = total_waiting_time / N`.  
+11. Print the average waiting time.  
+12. Get burst times as input from the user for 5 processes.  
+13. Call `CalculateWaitingTime()` with `at`, `bt`, and `N`.  
+14. End the program.
+
+---
 
 ### PROGRAM  
 
 ```
-class queue:
-    def __init__(self,limit):
-        self.queue=[]
-        self.rear=0
-        self.front=0
-        self.limit=limit
-    def isempty(self):
-        if len(self.queue)==0:
-            return True
-        else:
-            return False
-    def enqueue(self,item):
-        if len(self.queue)==self.limit:
-            print("Queue is full")
-        else:
-            self.queue.insert(self.rear,item)
-            self.rear+=1
-        
-        
-        
-        
-    def dequeue(self):
-        if self.front==self.rear:
-            print("Queue is underflow")
-        else:
-            self.queue.pop(self.front)
-            self.front+=1
-            print(self.queue)
-        
-        
-        
-    def display(self):
-        print(self.queue)
-        
-a=int(input())
-q=queue(a)
-q.enqueue(int(input()))
-q.enqueue(int(input()))
-q.enqueue(int(input()))
-q.display()
-q.dequeue()
+# Python3 program for implementation
+# of FCFS scheduling
+
+# Function to find the waiting
+# time for all processes
+def findWaitingTime(processes, n,
+					bt, wt):
+
+	# waiting time for
+	# first process is 0
+	wt[0] = 0
+
+	# calculating waiting time
+	for i in range(1, n ):
+		wt[i] = bt[i - 1] + wt[i - 1]
+
+# Function to calculate turn
+# around time
+def findTurnAroundTime(processes, n,
+					bt, wt, tat):
+
+	# calculating turnaround
+	# time by adding bt[i] + wt[i]
+	for i in range(n):
+		tat[i] = bt[i] + wt[i]
+
+# Function to calculate
+# average time
+def findavgTime( processes, n, bt):
+
+	wt = [0] * n
+	tat = [0] * n
+	total_wt = 0
+	total_tat = 0
+
+	# Function to find waiting
+	# time of all processes
+	findWaitingTime(processes, n, bt, wt)
+
+	# Function to find turn around
+	# time for all processes
+	findTurnAroundTime(processes, n,
+					bt, wt, tat)
+
+	# Display processes along
+	# with all details
+	print( "Processes Burst time " +
+				" Waiting time " +
+				" Turn around time")
+
+	# Calculate total waiting time
+	# and total turn around time
+	for i in range(n):
+	
+		total_wt = total_wt + wt[i]
+		total_tat = total_tat + tat[i]
+		print(" " + str(i + 1) + "   " +
+					str(bt[i]) + "  " +
+					str(wt[i]) + "    " +
+					str(tat[i]))
+
+	print( "Average waiting time = "+
+				str(total_wt / n))
+	print("Average turn around time = "+
+					str(total_tat / n))
+
+# Driver code
+if __name__ =="__main__":
+	
+	# process id's
+	processes = [ 1, 2, 3]
+	n = len(processes)
+
+	# Burst time of all processes
+	t0=int(input())
+	t1=int(input())
+	t2=int(input())
+	burst_time = [t0,t1,t2]
+
+	findavgTime(processes, n, burst_time)
+
+
 ```
 
 ### OUTPUT
-![Screenshot (262)](https://github.com/user-attachments/assets/601d35ad-edba-4202-bcb5-9341743721a4)
+![image](https://github.com/user-attachments/assets/7ad68e7c-e5be-4f72-b9e2-5637a095fa75)
+
 
 ### RESULT
-Thus the python program is initialised and executed successfully.
-
+Thus a Python program to implement CPU Process Scheduling using a queue has been successfully implemented.
